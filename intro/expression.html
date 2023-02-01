@@ -11,6 +11,30 @@
 -->
 <script>
 // 表達式與陳述式的差異
+// var a = 1;
+// a =2;
+
+// if (a =1) {
+//   console.log(123);
+// }
+
+// let condition = true;
+
+// let output = condition ? '我餓了' : '沒有餓';
+
+// console.log(output);
+
+
+// 宣告式
+function fn(params) {
+  
+}
+
+// 表達式
+const fn = function(){
+
+}
+
 </script>
 
 
@@ -28,6 +52,11 @@ function App() {
       <h5 className="card-title">{ data.name }</h5>
       <p className="card-text">{ data.description }</p>
       <a href={data.link} target="_blank" className="btn btn-primary">Go somewhere</a>
+      <br />
+    { 1 }, 
+    { 0 || 1}
+    { data.name ? data.name : '德華' }
+    { (function fn(){return 2*2})()}
     </div>
   </div>
 }

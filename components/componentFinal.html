@@ -96,11 +96,19 @@
                       city.weatherElement[0].time.map((time, index) =>{
                         return (<div className="col" key={index}>
                         <div className="h4 my-2">
-                          23日
+                          { new Date(time.startTime).toLocaleDateString(undefined, {
+                            day: 'numeric'
+                          }) }
                         </div>
-                          下午6:00 <br />
+                           { new Date(time.startTime).toLocaleString(undefined, {
+                            hour: 'numeric',
+                            minute: 'numeric'
+                          }) }<br />
                           ~<br />
-                          上午6:00
+                           { new Date(time.startTime).toLocaleString(undefined, {
+                            hour: 'numeric',
+                            minute: 'numeric'
+                          }) }
                           <img src={`./weatherIcon/${time.parameter.parameterName}.svg`} alt={time.parameter.parameterName} />
                           <div className="mt-2">{time.parameter.parameterName}</div>
                           <div className="mt-2"><i className="bi bi-umbrella-fill"></i> {city.weatherElement[4].time[index].parameter.parameterName}%</div>

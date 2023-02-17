@@ -75,9 +75,34 @@
     const App = () => {
       return (
         <>
-          <Weather>
             <h2 className="my-3">三十六小時天氣預報</h2>
-          </Weather>
+            <div className="row row-cols-2">
+              <div className="col">
+                <div className="card text-center">
+                  <div className="card-header">
+                    <div className="h4 my-0">台北市</div>
+                  </div>
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col">
+                        <div className="h4 my-2">
+                          23日
+                        </div>
+                          下午6:00 <br />
+                          ~<br />
+                          上午6:00
+                          <img src="./weatherIcon/多雲時陰.svg" />
+                          <div class="mt-2">多雲時有陰</div>
+                          <div class="mt-2"><i className="bi bi-umbrella-fill"></i> 100%</div>
+                      </div>
+                      <div className="col">
+                      </div>
+                      <div className="col"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </>
       );
     };

@@ -73,12 +73,13 @@
     }
 
     // wx 天氣概況
-
+    // MaxT 最高氣溫
+    // PoP 降雨機率
     const App = () => {
       return (
         <>
             <h2 className="my-3">三十六小時天氣預報</h2>
-            <div className="row row-cols-2">
+            <div className="row row-cols-2 g-4">
             {
               location.map((city) =>{
                 return (
@@ -89,20 +90,23 @@
                   </div>
                   <div className="card-body">
                     <div className="row">
-                      <div className="col">
+                    {/* city.weatherElement[0] wx */}
+                    {/* city.weatherElement[4] pop */}
+                    {
+                      city.weatherElement[0].time.map((time, index) =>{
+                        return (<div className="col" key={index}>
                         <div className="h4 my-2">
                           23日
                         </div>
                           下午6:00 <br />
                           ~<br />
                           上午6:00
-                          <img src="./weatherIcon/多雲時陰.svg" />
-                          <div className="mt-2">多雲時有陰</div>
-                          <div className="mt-2"><i className="bi bi-umbrella-fill"></i> 100%</div>
-                      </div>
-                      <div className="col">
-                      </div>
-                      <div className="col"></div>
+                          <img src={`./weatherIcon/${time.parameter.parameterName}.svg`} alt={time.parameter.parameterName} />
+                          <div className="mt-2">{time.parameter.parameterName}</div>
+                          <div className="mt-2"><i className="bi bi-umbrella-fill"></i> {city.weatherElement[4].time[index].parameter.parameterName}%</div>
+                      </div>)
+                      })
+                    }
                     </div>
                   </div>
                 </div>

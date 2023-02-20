@@ -3,26 +3,54 @@
 <div class="container main my-5"><div class="row"><main class="col post">
 <!-- 章節標題 --><div class="mb-4"><h1 class="mt-0 text-muted">input 綁定 useState</h1><small>檔名：<code>inputUseState.html</code></small></div>
 <!-- 🔥🔥練習開始🔥🔥 -->
+
+<!-- <input type="text" id="input"> -->
+<script>
+// // 原生的 change 事件說明
+// const input = document.querySelector("#input");
+// console.dir(input);
+
+// // 原生的 change 觸發時間會在離開之後
+// input.addEventListener('change', (e) => {
+//   console.log(e.target.value);
+// });
+
+// // 原生 JS
+// input.addEventListener('keyup', (e) => {
+//   console.log(e.target.value);
+// });
+
+</script>
+
 <div id="root"></div>
 <script type="text/babel">
 // #1 取出 useState 的方法
 const { useState } = React;
 
 const App = () => {
-  // const text = '這裡有一行文字';
+  // let text = '這裡有一行文字';
   // #2 定義狀態
-  const [text, setText] = useState('這是一段文字')
+  const [text, setText] = useState('這是一段文字');
   
-  return (<div>
-    {text}
-    {/* <input type="text" value={text} /> 在一般的變數下，input 無法綁定值 */}
-    <input type="text" value={text} onChange={
-      (e) => {
-        console.log(e.target.value);
-        setText(e.target.value)
-      }
-    } />
+  return (<div>{text}<input type='text' value={text} onChange={
+    (event) =>{
+      
+      console.log(event.target.value);
+      setText(event.target.value);
+    }
+  } />
   </div>)
+
+  // return (<div>
+  //   {text}
+  //   {/* <input type="text" value={text} /> 在一般的變數下，input 無法綁定值 */}
+  //   <input type="text" value={text} onChange={
+  //     (e) => {
+  //       console.log(e.target.value);
+  //       setText(e.target.value)
+  //     }
+  //   } />
+  // </div>)
 }
 
 ReactDOM.createRoot(document.querySelector('#root'))

@@ -22,8 +22,8 @@ const SearchBox = ({onSearchHandler, filterString}) => {
   return <div>
     <label htmlFor="filter">搜尋</label>
     <input type="text" id="filter" className="form-control"
-      value={filterString}
-      onChange={onSearchHandler}
+      defaultValue={filterString}
+      onKeyPress={onSearchHandler}
     />
   </div>
 }
@@ -33,8 +33,17 @@ const App = () => {
   const [filterString, setFilterString] = useState('flight');
   const [jsonData, setJsonData] = useState([]);
   const onSearchHandler = (e) => {
-    setFilterString(e.target.value);
+    if (e.key === "Enter") {
+      setFilterString(e.target.value);
+    }
+    // console.log(e);
   }
+
+  // #1 搜尋會做調整 keyPress(Enter)
+  // #2 把 getPhoto, 取得特定頁數
+  // #3 加入滾動事件，滾動到列表下方時，取得一筆新的
+  // #4
+
 
   useEffect(() => {
     (async () => {
@@ -47,7 +56,7 @@ const App = () => {
         console.log(error);
       }
     })();
-  }, [])
+  }, [filterString])
   
   return (<div>
     <SearchBox onSearchHandler={onSearchHandler} filterString={filterString} />

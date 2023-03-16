@@ -36,7 +36,7 @@ const App = () => {
   const isLoading = useRef(false);
   const currentPage = useRef(1);
   const onSearchHandler = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       setFilterString(e.target.value);
     }
   }
@@ -46,18 +46,28 @@ const App = () => {
   // #3 加入滾動事件，滾動到列表下方時，取得一筆新的
   // #4 修正過度觸發的問題 -> 加入讀取
 
-  const getPhotos = async (page=1) =>{
+  // 取得的新資料，居然在第二頁
+  // 新取得的AJAX，還是舊的Animal
+
+  // #5 輸入資料，資料狀態呈現要正確
+  // #6 確保監聽事件是正常的
+
+  const getPhotos = async (page = 1, isNew = false) =>{
     try {
             // 搜尋特定需要加入 query
             isLoading.current = true;
             const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}&page=${page}`);
-            console.log(result);
+            // console.log(result);
             // setJsonData(result.data.results);
             // setJsonData([...jsonData,  ...result.data.results]);
             setJsonData((preData) => {
               console.log('更新資料觸發');
+              if (isNew) {
+                return [...result.data.results];
+              }
               return [...preData,  ...result.data.results];
             });
+            currentPage.current = page;  // 每次都需要確認當前頁
             setTimeout(() => {
               isLoading.current = false;
             }, 1000);
@@ -68,18 +78,21 @@ const App = () => {
   }
   const listRef = useRef(null);
   useEffect(() => {
-    getPhotos();
+    getPhotos(1, true);
 
-    // 滾動監聽
-    window.addEventListener('scroll', () => {
+
+    const scrollEvent = () => {
       console.log('scroll', window.scrollY);
       const height = (listRef.current.offsetHeight + listRef.current.offsetTop) - window.innerHeight;
       if (!isLoading.current && window.scrollY > height) { // 需要滾動到下方，並沒有在讀取中
         currentPage.current ++;
-        getPhotos(currentPage.current); // 應該是頁數增加1
+        getPhotos(currentPage.current, false); // 應該是頁數增加1
       }
 
-    })
+    }
+    // 滾動監聽
+    window.addEventListener('scroll', scrollEvent);
+    return () => window.removeEventListener('scroll', scrollEvent)
   }, [filterString])
   
   return (<div>

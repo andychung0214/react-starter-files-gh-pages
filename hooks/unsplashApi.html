@@ -20,6 +20,7 @@ const Card = ({item}) => {
 const SearchBox = ({onSearchHandler, filterString}) => {
   return <div>
     <label htmlFor="filter">搜尋</label>
+    <p>剩餘請求次數：{ratelimitRemaing}</p>
     <input type="text" id="filter" className="form-control"
       defaultValue={filterString}
       onKeyPress={onSearchHandler}
@@ -27,10 +28,15 @@ const SearchBox = ({onSearchHandler, filterString}) => {
   </div>
 }
 
+// #1 剩餘次數
+// #2 讀取效果
+// #3 取得單張
+
 const App = () => {
   const [filterString, setFilterString] = useState('animal');
   const [jsonData, setJsonData] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
+  const [ratelimitRemaining, setRatelimitRemaining] = useState(50);
   const isLoading = useRef(false)
   const currentPage = useRef(1);
   const onSearchHandler = (e) => {
@@ -53,6 +59,7 @@ const App = () => {
           return [...preData, ...result.data.results];
         });
         currentPage.current = page; // 每次都需要確認當前頁
+        setRatelimitRemaining(request.headers['x-ratelimit-remaining']);
         setTimeout(() => {
           isLoading.current = false;
         }, 500);
